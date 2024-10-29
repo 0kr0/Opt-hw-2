@@ -5,21 +5,24 @@ public class Interior_point{
 
 
      public static void main(String[] args) {
+          // input
           Scanner in = new Scanner(System.in);
 
-          System.out.println("The number of variables:");
+          System.out.println("The size of vector X/The number of variables:");
           int n = in.nextInt();
 
-          System.out.println("The coefficient of objective function:");
-          double[] C = new double[n];
+          System.out.println("The vector C/The coefficient of objective function:");
+          double[][] c_arr = new double[n][1];
           for (int i = 0; i < n; i++) {
-               C[i] = in.nextDouble();
+               c_arr[i][0] = in.nextDouble();
           }
+          Matrix C;
+          C = new Matrix(c_arr);
 
-          System.out.println("The number of constraints:");
+          System.out.println("The size of matrix A/The number of constraints:");
           int m = in.nextInt();
 
-          System.out.println("The coefficient of constraint function:");
+          System.out.println("The matrix A/The coefficient of constraint function:");
           double[][] A_arr = new double[m][n];
           for (int i = 0; i < m; i++) {
                for (int j = 0; j < n; j++) {
@@ -28,12 +31,19 @@ public class Interior_point{
           }
           Matrix A = new Matrix(A_arr);
 
-
-          System.out.println("The right-hand side numbers:");
-          double[] b = new double[m];
-          for (int i = 0; i < m; i++) {
-               b[i] = in.nextDouble();
+          System.out.println("Initial solution:");
+          double[][] D_arr = new double[n][n];
+          for (int i=0; i<n; i++) for (int j=0; j<n; j++) {
+               if (i==j) D_arr[i][j] = in.nextDouble(); else D_arr[i][j]=0;
           }
+
+
+          System.out.println("The vector b/The right-hand side numbers:");
+          double[][] b_arr = new double[m][1];
+          for (int i = 0; i < m; i++) {
+               b_arr[i][0] = in.nextDouble();
+          }
+          Matrix b = new Matrix(b_arr);
 
           System.out.println("The approximation accuracy:");
           int accuracy = in.nextInt();
@@ -48,15 +58,17 @@ public class Interior_point{
           //     return;
           // }
 
+          double alpha = 0.5;
+
+          Matrix D = new Matrix(D_arr);
      }
 
 }
 
-
 class Matrix {
      private double[][] data;
-     private int rows;
-     private int cols;
+     private final int rows;
+     private final int cols;
 
      public Matrix(double[][] data) {
           this.rows = data.length;
