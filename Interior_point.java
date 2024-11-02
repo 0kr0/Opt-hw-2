@@ -10,7 +10,7 @@ public class Interior_point{
           System.out.println("The number of variables:");
           int n = in.nextInt();
 
-          System.out.println("Matrix C / the gradient/ The coefficient of objective function:");
+          System.out.println("Vector C / The gradient / The coefficient of objective function:");
           double[][] c_arr = new double[n][1];
           for (int i = 0; i < n; i++) {
                c_arr[i][0] = in.nextDouble();
@@ -32,10 +32,16 @@ public class Interior_point{
 
           System.out.println("Vector x / Initial solution:");
           double[][] x_arr = new double[n][1];
+          boolean isnonnegative = true;
           for (int i=0; i<n; i++){
                x_arr[i][0] = in.nextDouble();
+               if (x_arr[i][0] < 0){ isnonnegative = false;}
           }
           Matrix x = new Matrix(x_arr);
+          if(!isnonnegative){
+               System.out.println("Wrong input! Variables must be non-negative");
+               return;
+          }
 
           System.out.println("Vector b / The right-hand side numbers:");
           double[][] b_arr = new double[m][1];
@@ -46,7 +52,7 @@ public class Interior_point{
 
           //check if A*x = b:
           if (!A.multiply(x).equals(b)){
-               System.out.println("The method is not applicable!");
+               System.out.println("Wrong input! Ax must be equal b");
                return;
           }
 
