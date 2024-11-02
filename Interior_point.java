@@ -11,7 +11,7 @@ public class Interior_point{
           System.out.println("The number of variables:");
           int n = in.nextInt();
 
-          System.out.println("Matrix C / The coefficient of objective function:");
+          System.out.println("Matrix C / the gradient/ The coefficient of objective function:");
           double[][] c_arr = new double[n][1];
           for (int i = 0; i < n; i++) {
                c_arr[i][0] = in.nextDouble();
@@ -38,13 +38,12 @@ public class Interior_point{
           }
           Matrix x = new Matrix(x_arr);
 
-
-          System.out.println("Vector b / The right-hand side numbers:");
-          double[][] b_arr = new double[m][1];
-          for (int i = 0; i < m; i++) {
-               b_arr[i][0] = in.nextDouble();
-          }
-          Matrix b = new Matrix(b_arr);
+//          System.out.println("Vector b / The right-hand side numbers:");
+//          double[][] b_arr = new double[m][1];
+//          for (int i = 0; i < m; i++) {
+//               b_arr[i][0] = in.nextDouble();
+//          }
+//          Matrix b = new Matrix(b_arr);
 
           System.out.println("The approximation accuracy:");
           double accuracy = in.nextDouble();
@@ -89,15 +88,12 @@ public class Interior_point{
 
                Matrix C_p = P.multiply(C_tilda);
 
-
                double minimal_value = 1000000;
                for (int i = 0; i < n; i++) {
                     if (C_p.data[i][0] < minimal_value) {
                          minimal_value = C_p.data[i][0];
                     }
                }
-
-
 
                double v = Math.abs(minimal_value);
 
@@ -143,7 +139,6 @@ public class Interior_point{
 
           }
      }
-
 }
 
 
