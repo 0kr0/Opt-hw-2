@@ -1,5 +1,4 @@
 import java.util.Scanner;
-import java.util.Arrays;
 
 public class Interior_point{
 
@@ -38,12 +37,18 @@ public class Interior_point{
           }
           Matrix x = new Matrix(x_arr);
 
-//          System.out.println("Vector b / The right-hand side numbers:");
-//          double[][] b_arr = new double[m][1];
-//          for (int i = 0; i < m; i++) {
-//               b_arr[i][0] = in.nextDouble();
-//          }
-//          Matrix b = new Matrix(b_arr);
+          System.out.println("Vector b / The right-hand side numbers:");
+          double[][] b_arr = new double[m][1];
+          for (int i = 0; i < m; i++) {
+               b_arr[i][0] = in.nextDouble();
+          }
+          Matrix b = new Matrix(b_arr);
+
+          //check if A*x = b:
+          if (!A.multiply(x).equals(b)){
+               System.out.println("The method is not applicable!");
+               return;
+          }
 
           System.out.println("The approximation accuracy:");
           double accuracy = in.nextDouble();
@@ -88,7 +93,7 @@ public class Interior_point{
 
                Matrix C_p = P.multiply(C_tilda);
 
-               double minimal_value = 1000000;
+               double minimal_value = Integer.MAX_VALUE;
                for (int i = 0; i < n; i++) {
                     if (C_p.data[i][0] < minimal_value) {
                          minimal_value = C_p.data[i][0];
@@ -146,6 +151,21 @@ class Matrix {
      public double[][] data;
      public int rows;
      public int cols;
+
+     public boolean equals(Matrix other){
+          if (this.rows == other.rows && this.cols == other.cols){
+               for (int i = 0; i < rows; i ++){
+                    for (int j = 0; j < cols; j++) {
+                         if (this.data[i][j] != other.data[i][j]){
+                              return false;
+                         }
+                    }
+               }
+               return true;
+          } else{
+               return false;
+          }
+     }
 
      public Matrix(double[][] data) {
           this.rows = data.length;
@@ -267,6 +287,8 @@ class Matrix {
                throw new IllegalArgumentException("Matrices must have the same dimensions.");
           }
      }
+
+
 
 }
 
